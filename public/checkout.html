@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Digital Store</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.9.1/firebase-storage.js"></script>
+    
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="images/logo.png" alt="Digital Store">
+                <h1>Digital Store</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#apps">Aplikasi</a></li>
+                    <li><a href="index.html#services">Jasa Edit</a></li>
+                    <li><a href="index.html#about">Tentang Kami</a></li>
+                    <li><a href="login.html" id="login-btn">Login</a></li>
+                </ul>
+                <div class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="checkout">
+        <div class="container">
+            <div class="checkout-container">
+                <div class="checkout-summary">
+                    <h2>Ringkasan Pesanan</h2>
+                    <div class="cart-items" id="cart-items">
+                        <!-- Item keranjang akan dimuat di sini -->
+                    </div>
+                    <div class="cart-total">
+                        <div class="total-row">
+                            <span>Subtotal</span>
+                            <span id="subtotal">Rp 0</span>
+                        </div>
+                        <div class="total-row">
+                            <span>Pajak (10%)</span>
+                            <span id="tax">Rp 0</span>
+                        </div>
+                        <div class="total-row grand-total">
+                            <span>Total</span>
+                            <span id="grand-total">Rp 0</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="checkout-form">
+                    <h2>Informasi Pembayaran</h2>
+                    <form id="payment-form">
+                        <div class="form-group">
+                            <label for="name">Nama Lengkap</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Alamat</label>
+                            <textarea id="address" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Nomor Telepon</label>
+                            <input type="tel" id="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="payment-method">Metode Pembayaran</label>
+                            <select id="payment-method" required>
+                                <option value="">Pilih metode</option>
+                                <option value="bank">Transfer Bank</option>
+                                <option value="credit">Kartu Kredit</option>
+                                <option value="ewallet">E-Wallet</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Lanjutkan Pembayaran</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <!-- Footer sama seperti sebelumnya -->
+    </footer>
+
+    <script type="module">
+        import { auth, db } from './js/firebase.js';
+        import { 
+            collection, 
+            getDocs, 
+            doc, 
+            getDoc,
+            addDoc,
+            where,
+            query,
+            deleteDoc
+        } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+        
+        // Fungsi untuk memuat keranjang belanja
+        async function loadCart() {
+            if (!auth.currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            const cartItemsContainer = document.getElementById('cart-items');
+            const q = query(collection(db, "carts"), where("userId", "==", auth.currentUser.uid));
+            const querySnapshot = await getDocs(q);
+            
+            let subtotal = 0;
+            cartItemsContainer.innerHTML = '';
+            
+            for (const cartDoc of querySnapshot.docs) {
+                const cartItem = cartDoc.data();
+                const productDoc = await getDoc(doc(db, "products", cartItem.productId));
+                
+                if (productDoc.exists()) {
+                    const product = productDoc.data();
+                    const itemTotal = product.price * cartItem.quantity;
+                    subtotal += itemTotal;
+                    
+                    cartItemsContainer.innerHTML += `
+                        <div class="cart-item">
+                            <div class="item-image">
+                                <img src="${product.imageUrl}" alt="${product.name}">
+                            </div>
+                            <div class="item-info">
+                                <h3>${product.name}</h3>
+                                <p>Rp ${product.price.toLocaleString()} x ${cartItem.quantity}</p>
+                            </div>
+                            <div class="item-total">
+                                Rp ${itemTotal.toLocaleString()}
+                            </div>
+                            <button class="remove-item" data-id="${cartDoc.id}"><i class="fas fa-times"></i></button>
+                        </div>
+                    `;
+                }
+            }
+            
+            // Hitung total
+            const tax = subtotal * 0.1;
+            const grandTotal = subtotal + tax;
+            
+            document.getElementById('subtotal').textContent = `Rp ${subtotal.toLocaleString()}`;
+            document.getElementById('tax').textContent = `Rp ${tax.toLocaleString()}`;
+            document.getElementById('grand-total').textContent = `Rp ${grandTotal.toLocaleString()}`;
+            
+            // Tambahkan event listener untuk tombol hapus
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', async function() {
+                    const cartId = this.getAttribute('data-id');
+                    await deleteDoc(doc(db, "carts", cartId));
+                    loadCart();
+                });
+            });
+        }
+        
+        // Form pembayaran
+        document.getElementById('payment-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const address = document.getElementById('address').value;
+            const phone = document.getElementById('phone').value;
+            const paymentMethod = document.getElementById('payment-method').value;
+            
+            // Dapatkan item keranjang
+            const q = query(collection(db, "carts"), where("userId", "==", auth.currentUser.uid));
+            const querySnapshot = await getDocs(q);
+            
+            let subtotal = 0;
+            const items = [];
+            
+            for (const cartDoc of querySnapshot.docs) {
+                const cartItem = cartDoc.data();
+                const productDoc = await getDoc(doc(db, "products", cartItem.productId));
+                
+                if (productDoc.exists()) {
+                    const product = productDoc.data();
+                    const itemTotal = product.price * cartItem.quantity;
+                    subtotal += itemTotal;
+                    
+                    items.push({
+                        productId: productDoc.id,
+                        name: product.name,
+                        price: product.price,
+                        quantity: cartItem.quantity,
+                        total: itemTotal
+                    });
+                }
+            }
+            
+            const tax = subtotal * 0.1;
+            const grandTotal = subtotal + tax;
+            
+            // Buat pesanan
+            const orderData = {
+                userId: auth.currentUser.uid,
+                items,
+                subtotal,
+                tax,
+                total: grandTotal,
+                status: 'pending',
+                date: new Date().toISOString(),
+                customerInfo: {
+                    name,
+                    email,
+                    address,
+                    phone
+                },
+                paymentMethod
+            };
+            
+            try {
+                // Tambahkan pesanan ke Firestore
+                await addDoc(collection(db, "orders"), orderData);
+                
+                // Hapus item keranjang
+                for (const cartDoc of querySnapshot.docs) {
+                    await deleteDoc(doc(db, "carts", cartDoc.id));
+                }
+                
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Pesanan Berhasil',
+                    text: 'Pesanan Anda telah berhasil dibuat',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: error.message
+                });
+            }
+        });
+        
+        // Muat keranjang saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', loadCart);
+    </script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Produk - Digital Store</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="images/logo.png" alt="Digital Store">
+                <h1>Digital Store</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#apps">Aplikasi</a></li>
+                    <li><a href="index.html#services">Jasa Edit</a></li>
+                    <li><a href="index.html#about">Tentang Kami</a></li>
+                    <li><a href="login.html" id="login-btn">Login</a></li>
+                </ul>
+                <div class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="product-detail">
+        <div class="container">
+            <div class="product-images">
+                <div class="main-image">
+                    <img id="main-product-image" src="" alt="Product Image">
+                </div>
+            </div>
+            <div class="product-info">
+                <h1 id="product-title">Nama Produk</h1>
+                <div class="product-meta">
+                    <span class="price" id="product-price">Rp 0</span>
+                    <span class="category" id="product-category">Kategori</span>
+                    <span class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span>(12 reviews)</span>
+                    </span>
+                </div>
+                <div class="product-description">
+                    <h3>Deskripsi Produk</h3>
+                    <p id="product-description">Deskripsi produk akan muncul di sini...</p>
+                </div>
+                <div class="product-actions">
+                    <div class="quantity">
+                        <button class="qty-btn" id="decrease-qty">-</button>
+                        <input type="number" id="product-qty" value="1" min="1">
+                        <button class="qty-btn" id="increase-qty">+</button>
+                    </div>
+                    <button id="add-to-cart" class="btn">Tambahkan ke Keranjang</button>
+                    <button id="buy-now" class="btn btn-primary">Beli Sekarang</button>
+                </div>
+                <div class="product-details">
+                    <h3>Detail Produk</h3>
+                    <ul id="product-details-list">
+                        <!-- Detail akan dimuat via JavaScript -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="related-products">
+        <div class="container">
+            <h2>Produk Terkait</h2>
+            <div class="product-grid" id="related-products">
+                <!-- Produk terkait akan dimuat via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Digital Store</h3>
+                    <p>Penyedia aplikasi premium dan jasa editing profesional.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Kontak</h3>
+                    <p><i class="fas fa-envelope"></i> info@digitalstore.com</p>
+                    <p><i class="fas fa-phone"></i> +62 123 4567 890</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Ikuti Kami</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Digital Store. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js/firebase.js" type="module"></script>
+    <script src="js/auth.js" type="module"></script>
+    <script src="js/products.js" type="module"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

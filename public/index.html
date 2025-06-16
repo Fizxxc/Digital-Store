@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Store - Aplikasi Premium & Jasa Edit</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="/src/gamepad(1).png" alt="Digital Store">
+                <h1>Digital Store</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#apps">Aplikasi</a></li>
+                    <li><a href="#services">Jasa Edit</a></li>
+                    <li><a href="#about">Tentang Kami</a></li>
+                    <li><a href="login.html" id="login-btn">Login</a></li>
+                    <li><a href="admin.html" id="admin-btn" style="display:none;">Admin</a></li>
+                </ul>
+                <div class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Dapatkan Aplikasi Premium dan Jasa Edit Profesional</h2>
+                <p>Temukan koleksi aplikasi premium berkualitas tinggi dan jasa editing profesional untuk kebutuhan digital Anda.</p>
+                <a href="#apps" class="btn">Lihat Produk</a>
+            </div>
+            <div class="hero-image">
+                <img src="/src/7Bkp5DiR.jpg" alt="Hero Image" class="slide-in">
+            </div>
+        </div>
+    </section>
+
+    <section id="apps" class="products">
+        <div class="container">
+            <h2>Aplikasi Premium</h2>
+            <div class="product-grid" id="app-products">
+                <!-- Produk akan dimuat via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="products">
+        <div class="container">
+            <h2>Jasa Editing</h2>
+            <div class="product-grid" id="service-products">
+                <!-- Produk akan dimuat via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <h2>Tentang Kami</h2>
+            <p>Digital Store menyediakan aplikasi premium dan jasa editing profesional untuk membantu Anda dalam pekerjaan dan kreativitas. Kami berkomitmen untuk memberikan produk dan layanan berkualitas tinggi dengan harga terjangkau.</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Digital Store</h3>
+                    <p>Penyedia aplikasi premium dan jasa editing profesional.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Kontak</h3>
+                    <p><i class="fas fa-envelope"></i> info@digitalstore.com</p>
+                    <p><i class="fas fa-phone"></i> +62 123 4567 890</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Ikuti Kami</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Digital Store. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js/firebase.js" type="module"></script>
+    <script src="js/auth.js" type="module"></script>
+    <script src="js/products.js" type="module"></script>
+    <script src="js/admin.js" type="module"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Digital Store</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="../images/logo.png" alt="Digital Store">
+                <h3>Admin Panel</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#" class="active" data-section="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="#" data-section="products"><i class="fas fa-box"></i> Produk</a></li>
+                    <li><a href="#" data-section="orders"><i class="fas fa-shopping-cart"></i> Pesanan</a></li>
+                    <li><a href="#" data-section="users"><i class="fas fa-users"></i> Pengguna</a></li>
+                    <li><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-header">
+                <h2 id="admin-title">Dashboard</h2>
+                <div class="admin-search">
+                    <input type="text" placeholder="Search..." id="admin-search-input">
+                    <i class="fas fa-search"></i>
+                </div>
+            </header>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard-section" class="admin-section">
+                <div class="dashboard-cards">
+                    <div class="card">
+                        <div class="card-icon bg-blue">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="card-info">
+                            <h4>Total Pengguna</h4>
+                            <span id="total-users">0</span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon bg-green">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <div class="card-info">
+                            <h4>Total Produk</h4>
+                            <span id="total-products">0</span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon bg-orange">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="card-info">
+                            <h4>Total Pesanan</h4>
+                            <span id="total-orders">0</span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon bg-purple">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="card-info">
+                            <h4>Total Pendapatan</h4>
+                            <span id="total-revenue">Rp 0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-charts">
+                    <div class="chart-container">
+                        <h3>Pesanan Terakhir</h3>
+                        <div class="table-responsive">
+                            <table id="recent-orders-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID Pesanan</th>
+                                        <th>Produk</th>
+                                        <th>Pelanggan</th>
+                                        <th>Total</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Data akan dimuat via JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Products Section -->
+            <section id="products-section" class="admin-section" style="display:none;">
+                <div class="section-header">
+                    <h3>Kelola Produk</h3>
+                    <div>
+                        <button id="add-product-btn" class="btn">Tambah Produk</button>
+                        <button id="refresh-products-btn" class="btn btn-secondary">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table id="products-table">
+                        <thead>
+                            <tr>
+                                <th>Icon</th>
+                                <th>Nama</th>
+                                <th>Kategori</th>
+                                <th>Harga</th>
+                                <th>Stok</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data akan dimuat via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Orders Section -->
+            <section id="orders-section" class="admin-section" style="display:none;">
+                <div class="section-header">
+                    <h3>Kelola Pesanan</h3>
+                    <div>
+                        <button id="refresh-orders-btn" class="btn btn-secondary">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table id="orders-table">
+                        <thead>
+                            <tr>
+                                <th>ID Pesanan</th>
+                                <th>Produk</th>
+                                <th>Pelanggan</th>
+                                <th>Tanggal</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data akan dimuat via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Users Section -->
+            <section id="users-section" class="admin-section" style="display:none;">
+                <div class="section-header">
+                    <h3>Kelola Pengguna</h3>
+                    <div>
+                        <button id="refresh-users-btn" class="btn btn-secondary">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table id="users-table">
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>Bergabung</th>
+                                <th>Role</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data akan dimuat via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3 id="modal-title">Tambah Produk Baru</h3>
+            <form id="product-form">
+                <input type="hidden" id="product-id">
+                <div class="form-group">
+                    <label for="product-name">Nama Produk*</label>
+                    <input type="text" id="product-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="product-category">Kategori*</label>
+                    <select id="product-category" required>
+                        <option value="">Pilih Kategori</option>
+                        <option value="app">Aplikasi</option>
+                        <option value="service">Jasa Edit</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="product-price">Harga (Rp)*</label>
+                    <input type="number" id="product-price" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="product-stock">Stok* (-1 untuk unlimited)</label>
+                    <input type="number" id="product-stock" min="-1" value="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="product-description">Deskripsi*</label>
+                    <textarea id="product-description" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Detail Produk</label>
+                    <div id="product-details-container">
+                        <div class="detail-input">
+                            <input type="text" class="product-detail" placeholder="Fitur 1">
+                            <button type="button" class="remove-detail-btn"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <button type="button" id="add-detail-btn" class="btn btn-small">
+                        <i class="fas fa-plus"></i> Tambah Detail
+                    </button>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Simpan Produk</button>
+                    <button type="button" class="btn btn-secondary close-modal-btn">Batal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Order Modal -->
+    <div id="order-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3 id="order-modal-title">Edit Pesanan</h3>
+            <form id="order-form">
+                <input type="hidden" id="order-id">
+                <div class="form-group">
+                    <label>ID Pesanan</label>
+                    <p id="order-id-display"></p>
+                </div>
+                <div class="form-group">
+                    <label>Produk</label>
+                    <p id="order-product"></p>
+                </div>
+                <div class="form-group">
+                    <label>Pelanggan</label>
+                    <p id="order-customer"></p>
+                </div>
+                <div class="form-group">
+                    <label>Total</label>
+                    <p id="order-total"></p>
+                </div>
+                <div class="form-group">
+                    <label for="order-status">Status*</label>
+                    <select id="order-status" required>
+                        <option value="pending">Pending</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                    <button type="button" class="btn btn-secondary close-modal-btn">Batal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- User Modal -->
+    <div id="user-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3 id="user-modal-title">Edit Pengguna</h3>
+            <form id="user-form">
+                <input type="hidden" id="user-id">
+                <div class="form-group">
+                    <label for="user-name">Nama*</label>
+                    <input type="text" id="user-name" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <p id="user-email"></p>
+                </div>
+                <div class="form-group">
+                    <label for="user-role">Role*</label>
+                    <select id="user-role" required>
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                    <button type="button" class="btn btn-secondary close-modal-btn">Batal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js/firebase.js" type="module"></script>
+    <script src="js/auth.js" type="module"></script>
+    <script src="js/admin.js" type="module"></script>
+</body>
+</html>
