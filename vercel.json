@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "public/src/*.html",
+      "src": "public/*.html",
       "use": "@vercel/static"
     },
     {
@@ -18,27 +18,27 @@
     // HTML Routes
     {
       "src": "/",
-      "dest": "/public/src/index.html"
+      "dest": "/public/index.html"
     },
     {
       "src": "/admin",
-      "dest": "/public/src/admin.html"
+      "dest": "/public/admin.html"
     },
     {
       "src": "/login",
-      "dest": "/public/src/login.html"
+      "dest": "/public/login.html"
     },
     {
       "src": "/register",
-      "dest": "/public/src/register.html"
+      "dest": "/public/register.html"
     },
     {
       "src": "/checkout",
-      "dest": "/public/src/checkout.html"
+      "dest": "/public/checkout.html"
     },
     {
       "src": "/product-detail",
-      "dest": "/public/src/product-detail.html"
+      "dest": "/public/product-detail.html"
     },
     
     // Static Assets Routes
@@ -65,7 +65,7 @@
     {
       "src": "/(.*)",
       "status": 404,
-      "dest": "/public/src/404.html"
+      "dest": "/404.html"
     }
   ]
 }
