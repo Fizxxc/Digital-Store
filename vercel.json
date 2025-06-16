@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "*.html",
+      "src": "public/*.html",
       "use": "@vercel/static"
     },
     {
@@ -13,27 +13,14 @@
   "routes": [
     {
       "src": "/",
-      "dest": "/index.html"
+      "dest": "/public/index.html",
+      "headers": {
+        "Cache-Control": "no-cache"
+      }
     },
     {
       "src": "/admin",
-      "dest": "/admin.html"
-    },
-    {
-      "src": "/login",
-      "dest": "/login.html"
-    },
-    {
-      "src": "/register",
-      "dest": "/register.html"
-    },
-    {
-      "src": "/checkout",
-      "dest": "/checkout.html"
-    },
-    {
-      "src": "/product-detail",
-      "dest": "/product-detail.html"
+      "dest": "/public/admin.html"
     },
     {
       "src": "/js/(.*)",
@@ -48,13 +35,15 @@
       "dest": "/public/src/$1"
     },
     {
-      "src": "/404",
-      "dest": "/404.html"
-    },
-    {
       "src": "/(.*)",
-      "dest": "/404.html",
-      "status": 404
+      "status": 404,
+      "dest": "/404.html"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/public/index.html"
     }
   ]
 }
