@@ -2,39 +2,68 @@
   "version": 2,
   "builds": [
     {
-      "src": "public/*.html",
+      "src": "public/src/*.html",
       "use": "@vercel/static"
     },
     {
-      "src": "public/**/*",
+      "src": "public/js/*.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "public/css/*.css",
       "use": "@vercel/static"
     }
   ],
   "routes": [
+    // HTML Routes
     {
       "src": "/",
-      "dest": "/public/index.html"
+      "dest": "/public/src/index.html"
     },
     {
       "src": "/admin",
-      "dest": "/public/admin.html"
+      "dest": "/public/src/admin.html"
     },
     {
+      "src": "/login",
+      "dest": "/public/src/login.html"
+    },
+    {
+      "src": "/register",
+      "dest": "/public/src/register.html"
+    },
+    {
+      "src": "/checkout",
+      "dest": "/public/src/checkout.html"
+    },
+    {
+      "src": "/product-detail",
+      "dest": "/public/src/product-detail.html"
+    },
+    
+    // Static Assets Routes
+    {
       "src": "/js/(.*)",
-      "dest": "/public/js/$1"
+      "dest": "/public/js/$1",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
     },
     {
       "src": "/css/(.*)",
-      "dest": "/public/css/$1"
+      "dest": "/public/css/$1",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
     },
     {
-      "src": "/images/(.*)",
-      "dest": "/public/src/$1"
+      "src": "/404",
+      "dest": "/public/src/404.html"
     },
     {
       "src": "/(.*)",
       "status": 404,
-      "dest": "/404.html"
+      "dest": "/public/src/404.html"
     }
   ]
 }
