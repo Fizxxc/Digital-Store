@@ -6,11 +6,15 @@
       "use": "@vercel/static"
     },
     {
-      "src": "*.js",
+      "src": "public/js/*.js",
       "use": "@vercel/static"
     },
     {
-      "src": "*.css",
+      "src": "public/css/*.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "public/src/*.(jpg|png)",
       "use": "@vercel/static"
     }
   ],
@@ -22,6 +26,34 @@
     {
       "src": "/admin",
       "dest": "/admin.html"
+    },
+    {
+      "src": "/login",
+      "dest": "/login.html"
+    },
+    {
+      "src": "/register",
+      "dest": "/register.html"
+    },
+    {
+      "src": "/checkout",
+      "dest": "/checkout.html"
+    },
+    {
+      "src": "/product-detail",
+      "dest": "/product-detail.html"
+    },
+    {
+      "src": "/js/(.*)",
+      "dest": "/public/js/$1"
+    },
+    {
+      "src": "/css/(.*)",
+      "dest": "/public/css/$1"
+    },
+    {
+      "src": "/images/(.*)",
+      "dest": "/public/src/$1"
     },
     {
       "src": "/(.*)",
